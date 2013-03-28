@@ -1,0 +1,20 @@
+name: JailHelper
+main: com.andoutay.jailhelper.JailHelper
+version: 0.1.0
+description: >
+             JailHelper adds sends messages to players upon logging in if they're in jail
+depend: [Jail]
+
+permissions:
+  jailhelper.*:
+    description: Gives all JailHelper permissions to a player
+    default: false
+    children:
+      jailhelper.showonlogin: true
+      jailhelper.showperiodically: true
+  jailhelper.showonlogin:
+    description: Shows a message to a player on login if they're in jail
+    default: false
+  jailhelper.showperiodically:
+    description: Shows a message to a player periodically while they're in jail
+    default: false
