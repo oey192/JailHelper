@@ -5,6 +5,11 @@ description: >
              JailHelper adds sends messages to players upon logging in if they're in jail
 depend: [Jail]
 
+commands:
+  jailhelper:
+    description: Get info about JailHelper and reload the config
+    usage: /<command> <version|reload|help>
+
 permissions:
   jailhelper.*:
     description: Gives all JailHelper permissions to a player
@@ -12,9 +17,21 @@ permissions:
     children:
       jailhelper.showonlogin: true
       jailhelper.showperiodically: true
+      jailhelper.version: true
+      jailhelper.reload: true
+      jailhelper.help: true
   jailhelper.showonlogin:
     description: Shows a message to a player on login if they're in jail
     default: false
   jailhelper.showperiodically:
     description: Shows a message to a player periodically while they're in jail
+    default: false
+  jailhelper.version:
+    description: Allows player to view the version of the plugin
+    default: false
+  jailhelper.reload:
+    description: Allows the player to reload the config
+    default: false
+  jailhelper.help:
+    description: Allows the player to view help for JailHelper
     default: false

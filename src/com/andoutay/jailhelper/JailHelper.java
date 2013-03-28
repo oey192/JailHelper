@@ -3,6 +3,9 @@ package com.andoutay.jailhelper;
 import java.util.logging.Logger;
 
 import org.bukkit.ChatColor;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class JailHelper extends JavaPlugin
@@ -13,15 +16,17 @@ public class JailHelper extends JavaPlugin
 	
 	public void onLoad()
 	{
-		//set up config
+		new JHConfig(this);
 	}
 	
 	public void onEnable()
 	{
-		//check for Jail - if it doens't exist - disable this
+		//disable ourself if Jail isn't found
+		if (getServer().getPluginManager().getPlugin("Jail") == null) getServer().getPluginManager().disablePlugin(this);
 		
 		getServer().getPluginManager().registerEvents(new JHEventHandler(this), this);
 		
+		JHConfig.onEnable();
 		log.info(logPref + "enabled");
 	}
 	
@@ -30,5 +35,30 @@ public class JailHelper extends JavaPlugin
 		log.info(logPref + "disabled");
 	}
 
+	public boolean onCommand(CommandSender s, Command cmd, String label, String[] args)
+	{
+		if (cmd.getName().equalsIgnoreCase("jailhelper") && (s instanceof ConsoleCommandSender || s.hasPermission("jailhelper.reload"))  && args.length == 1 && args[0].equalsIgnoreCase("reload"))
+		{
+			JHConfig.reload();
+			s.sendMessage(chPref + "Config reloaded");
+			return true;
+		}
+		else if (cmd.getName().equalsIgnoreCase("jailhelper") && (s instanceof ConsoleCommandSender || s.hasPermission("jailhelper.version")) && args.length == 1 && args[0].equalsIgnoreCase("version"))
+		{
+			s.sendMessage(chPref + "Current version: " + getDescription().getVersion());
+			return true;
+		}
+		else if (cmd.getName().equalsIgnoreCase("jailhelper") && (s instanceof ConsoleCommandSender || s.hasPermission("jailhelper.help")) && args.length == 1 && args[0].equalsIgnoreCase("help"))
+		{
+			s.sendMessage(chPref + "Help");
+			s.sendMessage("/jailhelper version: Shows the current version of JailHelper");
+			s.sendMessage("/jailhelper reload: Reloads the config file");
+			s.sendMessage("/jailhelper help: Show this help message");
+			return true;
+		}
+		
+		return false;
+	}
+	
 
 }
