@@ -1,3 +1,3 @@
-loginMsg: '&eAttention: &3You''ve been jailed for $1 and will be released in $2 minutes. &rYou can use /ad to message an admin or /ticket if no admin is online.'
-repeatedMsg: 'Attention: You''ve been jailed for $1 and will be released in $2 minutes. You can use /ad to message an admin or /ticket if no admin is online.'
+loginMsg: '&eAttention: &rYou have been jailed for $1 and will be released in $2 minutes. You can use /ad to message an admin or /ticket if no admin is online.'
+repeatedMsg: '&eAttention: &rYou have been jailed for $1 and will be released in $2 minutes. You can use /ad to message an admin or /ticket if no admin is online.'
 repeatTime: 5

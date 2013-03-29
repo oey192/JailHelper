@@ -23,12 +23,13 @@ public class JailHelper extends JavaPlugin
 	{
 		//disable JailHelper if Jail isn't found
 		if (getServer().getPluginManager().getPlugin("Jail") == null) getServer().getPluginManager().disablePlugin(this);
+
+		JHConfig.onEnable();
 		
 		getServer().getPluginManager().registerEvents(new JHEventHandler(this), this);
 		
 		JHUtils.setMsgTimeout(this);
 		
-		JHConfig.onEnable();
 		log.info(logPref + "enabled");
 	}
 	

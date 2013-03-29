@@ -1,5 +1,7 @@
 package com.andoutay.jailhelper;
 
+import java.text.DecimalFormat;
+
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitScheduler;
@@ -33,19 +35,26 @@ public class JHUtils
 		JailAPI jail = JHUtils.getJailAPI(plugin);
 		for (Player p : plugin.getServer().getOnlinePlayers())
 			if (jail.isPlayerJailed(p.getName()) && p.hasPermission("jailhelper.showperiodically"))
-				p.sendMessage(JHUtils.formatMsgFromConfig(JHConfig.repeatedMsg, p, plugin));
+				p.sendMessage(formatMsgFromConfig(JHConfig.repeatedMsg, p, plugin));
 		
 		JHUtils.setMsgTimeout(plugin);
 	}
 	
 	public static String formatMsgFromConfig(String msg, Player p, JailHelper plugin)
 	{
-		String ans = msg;
 		JailAPI jail = JHUtils.getJailAPI(plugin);
+		String ans = msg, rsn = jail.getPrisoner(p.getName()).getReason();
+		if (rsn.equalsIgnoreCase("")) rsn = "no reason";
 		
-		ans = ans.replace("$1", jail.getPrisoner(p.getName()).getReason());
-		ans = ans.replace("$2", "" + jail.getPrisoner(p.getName()).getRemainingTimeMinutes());
+		ans = ans.replace("$1", rsn);
+		ans = ans.replace("$2", "" + round1Decimal(jail.getPrisoner(p.getName()).getRemainingTimeMinutes()));
 		
 		return ans;
+	}
+	
+	public static double round1Decimal(double d)
+	{
+        DecimalFormat oneDForm = new DecimalFormat("#.#");
+        return Double.valueOf(oneDForm.format(d));
 	}
 }
