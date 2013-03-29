@@ -21,10 +21,12 @@ public class JailHelper extends JavaPlugin
 	
 	public void onEnable()
 	{
-		//disable ourself if Jail isn't found
+		//disable JailHelper if Jail isn't found
 		if (getServer().getPluginManager().getPlugin("Jail") == null) getServer().getPluginManager().disablePlugin(this);
 		
 		getServer().getPluginManager().registerEvents(new JHEventHandler(this), this);
+		
+		JHUtils.setMsgTimeout(this);
 		
 		JHConfig.onEnable();
 		log.info(logPref + "enabled");
@@ -37,19 +39,37 @@ public class JailHelper extends JavaPlugin
 
 	public boolean onCommand(CommandSender s, Command cmd, String label, String[] args)
 	{
-		if (cmd.getName().equalsIgnoreCase("jailhelper") && (s instanceof ConsoleCommandSender || s.hasPermission("jailhelper.reload"))  && args.length == 1 && args[0].equalsIgnoreCase("reload"))
+		if (cmd.getName().equalsIgnoreCase("jailhelper")  && args.length == 1 && args[0].equalsIgnoreCase("reload"))
 		{
+			if(!(s instanceof ConsoleCommandSender || s.hasPermission("jailhelper.reload")))
+			{
+				s.sendMessage(chPref + ChatColor.RED + "Please contact your server administrator if you are supposed to have access to this command");
+				return true;
+			}
+			
 			JHConfig.reload();
 			s.sendMessage(chPref + "Config reloaded");
 			return true;
 		}
-		else if (cmd.getName().equalsIgnoreCase("jailhelper") && (s instanceof ConsoleCommandSender || s.hasPermission("jailhelper.version")) && args.length == 1 && args[0].equalsIgnoreCase("version"))
+		else if (cmd.getName().equalsIgnoreCase("jailhelper") && args.length == 1 && args[0].equalsIgnoreCase("version"))
 		{
+			if (!(s instanceof ConsoleCommandSender || s.hasPermission("jailhelper.version")))
+			{
+				s.sendMessage(chPref + ChatColor.RED + "Please contact your server administrator if you are supposed to have access to this command");
+				return true;
+			}
+			
 			s.sendMessage(chPref + "Current version: " + getDescription().getVersion());
 			return true;
 		}
-		else if (cmd.getName().equalsIgnoreCase("jailhelper") && (s instanceof ConsoleCommandSender || s.hasPermission("jailhelper.help")) && args.length == 1 && args[0].equalsIgnoreCase("help"))
+		else if (cmd.getName().equalsIgnoreCase("jailhelper") && args.length == 1 && args[0].equalsIgnoreCase("help"))
 		{
+			if (!(s instanceof ConsoleCommandSender || s.hasPermission("jailhelper.help")))
+			{
+				s.sendMessage(chPref + ChatColor.RED + "Please contact your server administrator if you are supposed to have access to this command");
+				return true;
+			}
+				
 			s.sendMessage(chPref + "Help");
 			s.sendMessage("/jailhelper version: Shows the current version of JailHelper");
 			s.sendMessage("/jailhelper reload: Reloads the config file");

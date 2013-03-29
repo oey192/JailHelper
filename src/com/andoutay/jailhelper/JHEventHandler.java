@@ -21,13 +21,9 @@ public class JHEventHandler implements Listener
 	{
 		JailAPI jail = JHUtils.getJailAPI(plugin);
 		Player p = evt.getPlayer();
-		String msg = JHConfig.loginMsg;
+		String msg = JHUtils.formatMsgFromConfig(JHConfig.loginMsg, p, plugin);
 		
 		if (jail.isPlayerJailed(p.getName()) && p.hasPermission("jailhelper.showonlogin"))
-		{
-			msg = msg.replace("$1", jail.getPrisoner(p.getName()).getReason());
-			msg = msg.replace("$2", "" + jail.getPrisoner(p.getName()).getRemainingTimeMinutes());
 			p.sendMessage(msg);
-		}
 	}
 }

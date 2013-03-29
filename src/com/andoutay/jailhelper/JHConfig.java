@@ -1,5 +1,6 @@
 package com.andoutay.jailhelper;
 
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.Configuration;
 
 public class JHConfig
@@ -33,8 +34,8 @@ private static Configuration config;
 	public static void loadConfigVals()
 	{
 		repeatTime = config.getInt("repeatTime");
-		loginMsg = config.getString("loginMsg");
-		repeatedMsg = config.getString("repeatedMsg");
+		loginMsg = ChatColor.translateAlternateColorCodes('&', config.getString("loginMsg"));
+		repeatedMsg = ChatColor.translateAlternateColorCodes('&',config.getString("repeatedMsg"));
 	}
 	
 }
