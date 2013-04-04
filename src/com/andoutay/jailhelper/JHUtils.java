@@ -43,7 +43,8 @@ public class JHUtils
 	public static String formatMsgFromConfig(String msg, Player p, JailHelper plugin)
 	{
 		JailAPI jail = JHUtils.getJailAPI(plugin);
-		String ans = msg, rsn = jail.getPrisoner(p.getName()).getReason();
+		String ans = msg, rsn = "";
+		if (jail.getPrisoner(p.getName()) != null) rsn = jail.getPrisoner(p.getName()).getReason();
 		if (rsn.equalsIgnoreCase("")) rsn = "no reason";
 		
 		ans = ans.replace("$1", rsn);
